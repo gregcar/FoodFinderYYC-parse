@@ -1,0 +1,20 @@
+{
+  "apps": [
+    {
+      "appName": "Find Finder YYC Development",
+      "serverURL": "https://food-finder-yyc-parse-dev.herokuapp.com/parse/",
+      "appId": "FFF7C2F1882D5F61494616772D480964A501EC1C",
+      "masterKey": "3AB9D8E82E81F74A6DD48001ED2FB7E8DBBE2A7C",
+      "javascriptKey": "B56BCC3E7B469DED0A351D8CA1D660E2903C0959",
+      "production": false
+    }
+  ],
+  "trustProxy": 1,
+  "users": [
+    {
+      "user":"admin",
+      "pass":"0c798d0d"
+    }
+  ],
+  "useEncryptedPasswords": false
+}

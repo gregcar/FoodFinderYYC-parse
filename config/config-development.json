@@ -1,0 +1,15 @@
+{
+  "appId": "FFF7C2F1882D5F61494616772D480964A501EC1C",
+  "databaseURI": "mongodb://foodfinderyyc:AEDCC757F1C771002BFB978C7877D43D1719FF9D@ds151289.mlab.com:51289/food-finder-yyc-dev",
+  "masterKey": "3AB9D8E82E81F74A6DD48001ED2FB7E8DBBE2A7C",
+  "clientKey": "3AA2B9694E83A164DC640791C5D0F7C3A10F5E6C",
+  "javascriptKey": "B56BCC3E7B469DED0A351D8CA1D660E2903C0959",
+  "restAPIKey": "396B0B0EA130F81BC69CE47D4211C147023BE51B",
+  "fileKey": "C4B49487923181583C07937908E6BDD36CEFCA19",
+  "serverURL": "https://food-finder-yyc-parse-dev.herokuapp.com/parse/",
+  "port": 80,
+  "appName": "Food Finder YYC Parse Server",
+  "mountPath": "/parse",
+  "cloud": "./cloud/main.js",
+  "logLevel": "info"
+}
