@@ -4,7 +4,7 @@
   "description": "Parse backend for FoodFinderYYC",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/jasmine/bin/jasmine.js"
+    "test": "./node_modules/jasmine/bin/jasmine.js ./cloud/spec/scheduleSpec.js"
   },
   "repository": {
     "type": "git",
