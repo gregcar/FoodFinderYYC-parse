@@ -16,6 +16,10 @@
     "url": "https://github.com/madebyuppercut/FoodFinderYYC-parse/issues"
   },
   "homepage": "https://github.com/madebyuppercut/FoodFinderYYC-parse#readme",
+  "engines": {
+    "node" : "~6.10.1",
+    "npm": "~4.1.2"
+  },
   "dependencies": {
     "express": "^4.15.2",
     "parse-dashboard": "^1.0.25",
