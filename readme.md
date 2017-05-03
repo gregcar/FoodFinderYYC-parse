@@ -1,6 +1,8 @@
 Food Finder YYC Parse Server
 ===
 
+![CodeShip status](https://app.codeship.com/projects/6bd77660-11aa-0135-e1c8-1a42010d9d06/status)
+
 Prerequisites 
 ---
 
@@ -20,7 +22,8 @@ Installation and Start Up Server
 Development
 ---
 1. There are 2 main branches: `master` and `dev`, create additional branches as necessary
-1. All features should have a corresponding set of unit tests located under `/spec`
+1. All features should have a corresponding set of unit tests located under `/cloud/spec`
+1. Separate out functionality into its own testable library, cloud code would simply be using these libraries
 1. Run `npm test` after implementation, this would run the Jasmine unit tests
 
 Deployment
