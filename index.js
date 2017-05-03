@@ -37,7 +37,7 @@
   app.post('/sms', function(req, res) {
     var twilio = require('twilio');
     var twiml = new twilio.TwimlResponse();
-    twiml.messag('Hello from Node!');
+    twiml.message('Hello from Node!');
     res.writeHead(200, {'Content-Type': 'text/xml'});
     res.end(twiml.toString());
   });
