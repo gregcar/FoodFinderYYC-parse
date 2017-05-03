@@ -33,4 +33,12 @@
   app.listen(port, function() {
     console.log('Running ' + config.appName + ' on port: ' + port);
   });
+
+  app.post('/sms', function(req, res) {
+    var twilio = require('twilio');
+    var twiml = new twilio.TwimlResponse();
+    twiml.messag('Hello from Node!');
+    res.writeHead(200, {'Content-Type': 'text/xml'});
+    res.end(twiml.toString());
+  });
 }());
