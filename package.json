@@ -21,13 +21,10 @@
     "npm": "~4.1.2"
   },
   "dependencies": {
-    "botkit": "^0.5.4",
-    "botkit-sms": "^1.1.1",
     "express": "^4.15.2",
     "http": "0.0.0",
     "parse-dashboard": "^1.0.25",
-    "parse-server": "^2.3.8",
-    "twilio": "^2.11.1"
+    "parse-server": "^2.3.8"
   },
   "devDependencies": {
     "jasmine": "^2.6.0"

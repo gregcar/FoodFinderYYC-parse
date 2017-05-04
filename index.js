@@ -13,15 +13,6 @@
   var api = new ParseServer(config);
   var dashboard = new ParseDashboard(dashboardConfig);
 
-  var TwilioSMSBot = require('botkit-sms');
-  var controller = TwilioSMSBot({
-    account_sid: 'ACa1acd415af1b8f899c89a22cf672e1b3',
-    auth_token: '5a7ea9a9fa095f42407c472cc2637e1d',
-    twilio_number: '+15873168074'
-  });
-
-  var bot = controller.spawn({});
-
   app.all('*', function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
@@ -41,20 +32,5 @@
 
   app.listen(port, function() {
     console.log('Running ' + config.appName + ' on port: ' + port);
-  });
-
-  // app.post('/sms', function(req, res) {
-  //   var twilio = require('twilio');
-  //   var twiml = new twilio.TwimlResponse();
-  //   twiml.message('Hello from Node!');
-  //   res.writeHead(200, {'Content-Type': 'text/xml'});
-  //   res.end(twiml.toString());
-  // });
-  controller.createWebhookEndpoints(controller.webserver, bot, function() {
-    console.log('Bot is online!');
-  });
-
-  controller.hears(['hello'], 'message_received', function(bot, message) {
-    bot.reply(message, 'Hello from Node!');
   });
 }());
