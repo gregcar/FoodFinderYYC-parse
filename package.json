@@ -4,7 +4,8 @@
   "description": "Parse backend for FoodFinderYYC",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/jasmine/bin/jasmine.js ./cloud/spec/scheduleSpec.js"
+    "start": "nf start",
+    "test": "jasmine ./cloud/spec/scheduleSpec.js"
   },
   "repository": {
     "type": "git",
@@ -17,11 +18,12 @@
   },
   "homepage": "https://github.com/madebyuppercut/FoodFinderYYC-parse#readme",
   "engines": {
-    "node" : "~6.10.1",
+    "node": "~6.10.1",
     "npm": "~4.1.2"
   },
   "dependencies": {
     "express": "^4.15.2",
+    "foreman": "^2.0.0",
     "parse-dashboard": "^1.0.25",
     "parse-server": "^2.3.8"
   },

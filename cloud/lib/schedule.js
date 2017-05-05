@@ -37,6 +37,8 @@
     } else if (expression.indexOf('-') > -1) {
       expressionArray = expression.split('-');
       checkType = 'range';
+    } else if (expression === '*') {
+      check = true;
     }
 
     switch (checkType) {
@@ -64,15 +66,17 @@
    */
   function _checkRule(rule, dateTime, granularity) {
     var isAvailable = false;
-    var startTime = rule.startHour * 100 + rule.startMin;
-    var endTime = rule.endHour * 100 + rule.endMin;
-    var time = dateTime.hour * 100 + dateTime.min;
+    var startTime = rule.startTime;
+    var endTime = rule.endTime;
+    var time = dateTime.time;
 
     if (rule.weekDay === '*' && rule.month === '*' && rule.monthDay === '*') {
       isAvailable = true;
     } else {
       if (rule.month !== '*') {
         isAvailable = _checkRange(rule.month, dateTime.month);
+      } else if (rule.month === '*') {
+        isAvailable = true;
       }
 
       if (isAvailable && rule.monthDay !== '*') {
