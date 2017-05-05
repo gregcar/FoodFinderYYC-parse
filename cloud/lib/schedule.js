@@ -88,8 +88,6 @@
       }
     }
 
-    console.log(rule, dateTime);
-
     if (match && granularity !== 'day') {
       match = startTime < time && time < endTime;
     }
