@@ -22,7 +22,7 @@
   function _checkRange(expression, value) {
     var expressionArray = [];
     var checkType;
-    var check = false;
+    var match = false;
 
     if (expression.indexOf(',') > -1 && expression.indexOf('-') > -1) {
       throw 'rule format error';
@@ -38,22 +38,22 @@
       expressionArray = expression.split('-');
       checkType = 'range';
     } else if (expression === '*') {
-      check = true;
+      match = true;
     }
 
     switch (checkType) {
       case 'single':
-        check = expressionArray[0] === value;
+        match = expressionArray[0] === value;
         break;
       case 'multi':
-        check = expressionArray.find(function(thisValue) { return parseInt(thisValue) === value; });
+        match = expressionArray.find(function(thisValue) { return parseInt(thisValue) === value; });
         break;
       case 'range':
-        check = parseInt(expressionArray[0]) <= value && parseInt(expressionArray[1]) >= value;
+        match = parseInt(expressionArray[0]) <= value && parseInt(expressionArray[1]) >= value;
         break;
     }
 
-    return check;
+    return match;
   }
 
   /**
@@ -65,34 +65,36 @@
    * @private
    */
   function _checkRule(rule, dateTime, granularity) {
-    var isAvailable = false;
+    var match = false;
     var startTime = rule.startTime;
     var endTime = rule.endTime;
     var time = dateTime.time;
 
     if (rule.weekDay === '*' && rule.month === '*' && rule.monthDay === '*') {
-      isAvailable = true;
+      match = true;
     } else {
       if (rule.month !== '*') {
-        isAvailable = _checkRange(rule.month, dateTime.month);
+        match = _checkRange(rule.month, dateTime.month);
       } else if (rule.month === '*') {
-        isAvailable = true;
+        match = true;
       }
 
-      if (isAvailable && rule.monthDay !== '*') {
-        isAvailable = _checkRange(rule.monthDay, dateTime.monthDay);
+      if (match && rule.monthDay !== '*') {
+        match = _checkRange(rule.monthDay, dateTime.monthDay);
       }
 
-      if (isAvailable && rule.weekDay !== '*') {
-        isAvailable = _checkRange(rule.weekDay, dateTime.weekDay);
+      if (match && rule.weekDay !== '*') {
+        match = _checkRange(rule.weekDay, dateTime.weekDay);
       }
     }
 
-    if (isAvailable && granularity !== 'day') {
-      isAvailable = startTime < time && time < endTime;
+    console.log(rule, dateTime);
+
+    if (match && granularity !== 'day') {
+      match = startTime < time && time < endTime;
     }
 
-    return isAvailable;
+    return match;
   }
 
   /**

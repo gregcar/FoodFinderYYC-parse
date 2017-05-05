@@ -45,21 +45,24 @@
   }
 
   function _convertTimeToRule(time) {
+    var startTime = new Date(time.get('startTime'));
+    var endTime = new Date(time.get('endTime'));
+
     return {
       monthDay: time.get('monthDay'),
       month: time.get('month'),
       weekDay: time.get('weekDay'),
-      startTime: parseInt(time.get('startTime')),
-      endTime: parseInt(time.get('endTime'))
+      startTime: startTime.getUTCHours() * 100 + startTime.getUTCMinutes(),
+      endTime: endTime.getUTCHours() * 100 + endTime.getUTCMinutes()
     }
   }
 
-  function _convertDate(date, time) {
+  function _convertDate(date) {
     return {
-      monthDay: date.monthDay,
-      month: date.month,
-      weekDay: date.weekDay,
-      time: time
+      monthDay: date.getDate(),
+      month: date.getMonth() + 1,
+      weekDay: date.getDay() === 0 ? 7 : date.getDay(),     // Make Sunday = 7
+      time: date.getHours() * 100 + date.getMinutes()
     }
   }
 
@@ -68,18 +71,17 @@
    * @param closedTimes
    * @param openTimes
    * @param date
-   * @param dateNow
-   * @param timeNow
+   * @param dateTimeNow
    * @private
    */
-  function _checkLocationSchedule(openTimes, closedTimes, date, dateNow, timeNow) {
+  function _checkLocationSchedule(openTimes, closedTimes, date, dateTimeNow) {
     var openRules = openTimes.map(_convertTimeToRule);
     var closedRules = closedTimes.map(_convertTimeToRule);
     var schedule = new Schedule(openRules, closedRules);
 
     return {
-      day: schedule.check(_convertDate(date, "0000"), 'day'),
-      now: schedule.check(_convertDate(dateNow, timeNow), 'hour')
+      day: schedule.check(_convertDate(date), 'day'),
+      now: dateTimeNow ? schedule.check(_convertDate(dateTimeNow), 'hour') : false
     };
   }
 
@@ -100,8 +102,8 @@
       promises.push(
         Parse.Promise.when(isOpen.find(), isClosed.find())
           .then(
-            function(closedTimes, openTimes) {
-              var check = _checkLocationSchedule(openTimes, closedTimes, searchParams.date, searchParams.dateNow, searchParams.timeNow);
+            function(openTimes, closedTimes) {
+              var check = _checkLocationSchedule(openTimes, closedTimes, searchParams.date, searchParams.dateTimeNow);
               if (check.day) {
                 return {object: location, available: check};
               } else {
@@ -119,20 +121,30 @@
     return _findLocations(searchParams)
       .then(
         function(locations) {
-          return _checkLocationsSchedule(searchParams, locations);
+          if (searchParams.date) {
+            return _checkLocationsSchedule(searchParams, locations);
+          } else {
+            return locations.map(function(location) {
+              return {object: location, available: {day: true, now: false}};
+            });
+          }
         }
       ).then(
         function(locations) {
-          return locations;
+          // filter out the null results
+          return locations.filter(function(location) {
+            if (location) {
+              return location;
+            }
+          });
         }
       );
   }
 
   Parse.Cloud.define("search", function(request, response) {
     var searchParams = {
-      date: request.params.date,
-      dateNow: request.params.dateNow,
-      timeNow: request.params.timeNow,
+      date: request.params.date ? new Date(request.params.date) : null,
+      dateTimeNow: request.params.dateTimeNow ? new Date(request.params.dateTimeNow) : null,
       meals: request.params.meals,
       distance: request.params.distance,
       geolocation: request.params.geolocation,
