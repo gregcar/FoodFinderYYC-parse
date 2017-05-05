@@ -13,11 +13,55 @@ Installation and Start Up Server
 ---
 
 1. Check out this repository
-1. Set your `NODE_ENV` to `local`. This would determine which configuration file to load
+1. Create a file `.env` in this project's root, the structure is combination of Parse Server and Parse Dasbhoard config (see next section for an example)
 1. Run `npm install`. This should resolve all package dependencies
-1. Run `node index.js`
+1. Run `npm start`
 1. Open [http://localhost:8080/parse](http://localhost:8080/parse) in a browser, if you see an unauthorized messge, it's ready to go
 1. Open [http://localhost:8080/dashboard](http://localhost:8080/dashboard) to see the Parse Dashboard in action. Password is located in `config/dashboard-config.json`
+
+Sample .env
+---
+```
+{
+  "port": 8080,
+  "parse": {
+    "server": {
+      "appId": "XXXXXXXX",
+      "databaseURI": "[mongoDB URI]",
+      "masterKey": "XXXXXXXX",
+      "clientKey": "XXXXXXXX",
+      "javascriptKey": "XXXXXXXX",
+      "restAPIKey": "XXXXXXXX",
+      "fileKey": "XXXXXXXX",
+      "serverURL": "http://localhost:8080/parse/",
+      "appName": "Food Finder YYC Parse Server",
+      "mountPath": "/parse",
+      "cloud": "./cloud/main.js",
+      "logLevel": "info"
+    },
+    "dashboard": {
+      "apps": [
+        {
+          "appName": "Find Finder YYC Development",
+          "serverURL": "[Food Finder YYC Parse URL]",
+          "appId": "XXXXXXXX",
+          "masterKey": "XXXXXXXX",
+          "javascriptKey": "XXXXXXXX",
+          "production": false
+        }
+      ],
+      "trustProxy": 1,
+      "users": [
+        {
+          "user": "admin",
+          "pass": "[password]"
+        }
+      ],
+      "useEncryptedPasswords": false
+    }
+  }
+}
+```
 
 Development
 ---
