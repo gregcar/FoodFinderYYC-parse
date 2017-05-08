@@ -36,8 +36,7 @@
     "users": [{
       "user": process.env.PARSE_DASHBOARD_USERS_0_USER,
       "pass": process.env.PARSE_DASHBOARD_USERS_0_PASS
-    }],
-    "useEncryptedPasswords": process.env.DASHBOARD_USEENCRYPTEDPASSWORDS
+    }]
   };
 
   console.log(dashboardConfig);
