@@ -109,7 +109,7 @@
    * e.g.:
    * @param {object} time {monthDay: Number, month: Number, weekDay: Number, hour: Number, min: Number}
    * @param {String} granularity
-   * @returns {boolean}
+   * @returns {object}
    * @private
    */
   function _check(time, granularity) {
@@ -129,6 +129,7 @@
         // Only set to false if a rule applies, if it's not a hour-check, ignore time check
         if (_checkRule(rule, time, granularity, granularity !== 'hour')) {
           isAvailable = false;
+          times = [];
         }
       });
     }

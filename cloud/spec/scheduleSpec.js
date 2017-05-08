@@ -31,6 +31,7 @@ describe('Schedule: ', function() {
     expect(schedule.check(time1, 'day').isAvailable).toBe(true);
     expect(schedule.check(time1, 'day').times[0]).toEqual({start: 0900, end: 1000});
     expect(schedule.check(time1, 'hour').isAvailable).toBe(false);
+    expect(schedule.check(time1, 'hour').times.length).toBe(0);
   });
 
   it('1030 and 1330 should both satisfy rule set for every day, between 1000 - 1100, and between 1300 - 1400, on day and hour levels of granularity', function() {
@@ -99,6 +100,7 @@ describe('Schedule: ', function() {
     expect(schedule.check(time1, 'day').isAvailable).toBe(true);
     expect(schedule.check(time1, 'day').times[0]).toEqual({start: 0900, end: 1000});
     expect(schedule.check(time1, 'hour').isAvailable).toBe(false);
+    expect(schedule.check(time1, 'hour').times.length).toBe(0);
   });
 
   it('Jan 1 1030 should not satisfy rule set for every day in Feb and Mar, between 1000 - 1100, and every day in Mar between 1300 - 1400, on day and hour levels of granularity', function() {
@@ -109,7 +111,9 @@ describe('Schedule: ', function() {
     var schedule = new Schedule(availableRules);
 
     expect(schedule.check(time1, 'day').isAvailable).toBe(false);
+    expect(schedule.check(time1, 'day').times.length).toBe(0);
     expect(schedule.check(time1, 'hour').isAvailable).toBe(false);
+    expect(schedule.check(time1, 'hour').times.length).toBe(0);
   });
 
   it('Jan 1 1030 should not satisfy rule set for every day in Jan and Mar, between 1000 - 1100, and every day in Mar between 1300 - 1400, but not Jan 1, on day and hour levels of granularity', function() {
@@ -123,7 +127,9 @@ describe('Schedule: ', function() {
     var schedule = new Schedule(availableRules, unavailableRules);
 
     expect(schedule.check(time1, 'day').isAvailable).toBe(false);
+    expect(schedule.check(time1, 'day').times.length).toBe(0);
     expect(schedule.check(time1, 'hour').isAvailable).toBe(false);
+    expect(schedule.check(time1, 'hour').times.length).toBe(0);
   });
 
   it('Jan 1 1030 should satisfy rule set for every day in Jan and Mar, between 1000 - 1100, and every day in Mar between 1300 - 1400, but not Feb 1, on day and hour levels of granularity', function() {
@@ -152,7 +158,9 @@ describe('Schedule: ', function() {
     var schedule = new Schedule(availableRules, unavailableRules);
 
     expect(schedule.check(time1, 'day').isAvailable).toBe(false);
+    expect(schedule.check(time1, 'day').times.length).toBe(0);
     expect(schedule.check(time1, 'hour').isAvailable).toBe(false);
+    expect(schedule.check(time1, 'hour').times.length).toBe(0);
   });
 
   it('Monday Jan 1 1030 should satisfy rule set for every day between 0900 - 1200, and closing weekdays between 1000 - 1100 on day check, but not hour check', function() {
@@ -167,5 +175,6 @@ describe('Schedule: ', function() {
     expect(schedule.check(time1, 'day').isAvailable).toBe(true);
     expect(schedule.check(time1, 'day').times[0]).toEqual({start: 0900, end: 1200});
     expect(schedule.check(time1, 'hour').isAvailable).toBe(false);
+    expect(schedule.check(time1, 'hour').times.length).toBe(0);
   });
 });

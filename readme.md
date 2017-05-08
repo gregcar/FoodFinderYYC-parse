@@ -86,9 +86,10 @@ After initialize Parse client, search can be done by invoking the `search` cloud
 - `geolocation`: Geolocation, must be in `{latitude, longitude}` format
 - `distance`: Combined with geolocation, return the locations within the distance, in KM
 
-The response would be an array, which contains 2 keys: `available` and `object`, where:
+The response would be an array, which contains 3 keys: `day`, `now`, and `object`, where:
 
-- `available`: This contains availability information for the day (of the query), as well as if it's open currently
+- `day`: This contains availability information for the day (of the query), as well as times that it's open
+- `now`: This contains availability information for right now (of the query), as well as times that it's open 
 - `object`: The Parse object for the location
 
 **Note:** ```date``` needs to be present in order to determine if a location is open on that day, if ```dateTimeNow``` is present it'd also determine if it's open right now  
