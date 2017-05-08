@@ -81,7 +81,7 @@
 
     return {
       day: schedule.check(_convertDate(date), 'day'),
-      now: dateTimeNow ? schedule.check(_convertDate(dateTimeNow), 'hour') : false
+      now: dateTimeNow ? schedule.check(_convertDate(dateTimeNow), 'hour') : {isAvailable: false, times: []}
     };
   }
 
@@ -104,8 +104,8 @@
           .then(
             function(openTimes, closedTimes) {
               var check = _checkLocationSchedule(openTimes, closedTimes, searchParams.date, searchParams.dateTimeNow);
-              if (check.day) {
-                return {object: location, available: check};
+              if (check.day.isAvailable) {
+                return {object: location, day: check.day, now: check.now};
               } else {
                 return null;
               }

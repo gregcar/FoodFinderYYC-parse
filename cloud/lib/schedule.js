@@ -114,11 +114,13 @@
    */
   function _check(time, granularity) {
     var isAvailable = false;
+    var times = [];
 
     this._availableRules.forEach(function(rule) {
       // Only set to true if a rule applies
       if (_checkRule(rule, time, granularity)) {
         isAvailable = true;
+        times.push({start: rule.startTime, end: rule.endTime});
       }
     });
 
@@ -131,7 +133,7 @@
       });
     }
 
-    return isAvailable;
+    return {isAvailable: isAvailable, times: times};
   }
 
   Schedule.prototype = {
