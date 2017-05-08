@@ -102,7 +102,7 @@ describe('Schedule: ', function() {
       ScheduleHlper.convertToRule('* 3 * 1300 1400')
     ];
     var unavailableRules = [
-      ScheduleHlper.convertToRule('1 1 * 0000 2359')
+      ScheduleHlper.convertToRule('1 1 * null null')
     ];
     var schedule = new Schedule(availableRules, unavailableRules);
 
@@ -116,7 +116,7 @@ describe('Schedule: ', function() {
       ScheduleHlper.convertToRule('* 3 * 1300 1400')
     ];
     var unavailableRules = [
-      ScheduleHlper.convertToRule('1 2 * 0000 2359')
+      ScheduleHlper.convertToRule('1 2 * null null')
     ];
     var schedule = new Schedule(availableRules, unavailableRules);
 
@@ -129,11 +129,24 @@ describe('Schedule: ', function() {
       ScheduleHlper.convertToRule('* * * 1000 1100')
     ];
     var unavailableRules = [
-      ScheduleHlper.convertToRule('* * 1-5 0000 2359')
+      ScheduleHlper.convertToRule('* * 1-5 null null')
     ];
     var schedule = new Schedule(availableRules, unavailableRules);
 
     expect(schedule.check(time1, 'day')).toBe(false);
+    expect(schedule.check(time1, 'hour')).toBe(false);
+  });
+
+  it('Monday Jan 1 1030 should satisfy rule set for every day between 0900 - 1200, and closing weekdays between 1000 - 1100 on day check, but not hour check', function() {
+    var availableRules = [
+      ScheduleHlper.convertToRule('* * * 0900 1200')
+    ];
+    var unavailableRules = [
+      ScheduleHlper.convertToRule('* * 1-5 1000 1100')
+    ];
+    var schedule = new Schedule(availableRules, unavailableRules);
+
+    expect(schedule.check(time1, 'day')).toBe(true);
     expect(schedule.check(time1, 'hour')).toBe(false);
   });
 });

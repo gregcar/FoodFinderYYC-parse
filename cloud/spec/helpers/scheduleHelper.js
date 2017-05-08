@@ -12,8 +12,8 @@
         monthDay: ruleArray[0],
         month: ruleArray[1],
         weekDay: ruleArray[2],
-        startTime: parseInt(ruleArray[3]),
-        endTime: parseInt(ruleArray[4])
+        startTime: ruleArray[3] === 'null' ? null : parseInt(ruleArray[3]),
+        endTime: ruleArray[4] === 'null' ? null : parseInt(ruleArray[4])
       };
     }
 

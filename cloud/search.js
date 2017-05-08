@@ -45,15 +45,15 @@
   }
 
   function _convertTimeToRule(time) {
-    var startTime = new Date(time.get('startTime'));
-    var endTime = new Date(time.get('endTime'));
+    var startTime = time.get('startTime') ? new Date(time.get('startTime')) : null;
+    var endTime = time.get('endTime') ? new Date(time.get('endTime')) : null;
 
     return {
       monthDay: time.get('monthDay'),
       month: time.get('month'),
       weekDay: time.get('weekDay'),
-      startTime: startTime.getUTCHours() * 100 + startTime.getUTCMinutes(),
-      endTime: endTime.getUTCHours() * 100 + endTime.getUTCMinutes()
+      startTime: startTime ? (startTime.getUTCHours() * 100 + startTime.getUTCMinutes()) : null,
+      endTime: endTime ? (endTime.getUTCHours() * 100 + endTime.getUTCMinutes()) : null
     }
   }
 

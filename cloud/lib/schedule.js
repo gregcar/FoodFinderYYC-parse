@@ -61,10 +61,11 @@
    * @param rule
    * @param dateTime
    * @param granularity
+   * @param ignoreTime
    * @returns {boolean}
    * @private
    */
-  function _checkRule(rule, dateTime, granularity) {
+  function _checkRule(rule, dateTime, granularity, ignoreTime = false) {
     var match = false;
     var startTime = rule.startTime;
     var endTime = rule.endTime;
@@ -88,8 +89,16 @@
       }
     }
 
-    if (match && granularity !== 'day') {
-      match = startTime < time && time < endTime;
+    // if matched, and rule has start and end times
+    if (match && startTime && endTime) {
+      // apply hour check
+      if (granularity === 'hour') {
+        match = startTime < time && time < endTime;
+      }
+      // but return match is false when ignoring time (used for day-check against a closure-rule
+      if (ignoreTime) {
+        match = false;
+      }
     }
 
     return match;
@@ -115,8 +124,8 @@
 
     if (isAvailable) {
       this._unavailableRules.forEach(function(rule) {
-        // Only set to false if a rule applies
-        if (_checkRule(rule, time, granularity)) {
+        // Only set to false if a rule applies, if it's not a hour-check, ignore time check
+        if (_checkRule(rule, time, granularity, granularity !== 'hour')) {
           isAvailable = false;
         }
       });
