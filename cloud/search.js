@@ -165,8 +165,6 @@
       noIdNorReferral: request.params.noIdNorReferral
     };
 
-    console.log('=== date: ' + searchParams.date + ' - ' + searchParams.date.getDate());
-
     _search(searchParams)
       .then(
         function(locations) {
