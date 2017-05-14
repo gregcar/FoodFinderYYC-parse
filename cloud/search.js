@@ -141,10 +141,24 @@
       );
   }
 
+  /**
+   * Process date string into Date object, but retain the time instead of converting to server's timezone
+   * @param date
+   * @private
+   */
+  function _parseDate(date) {
+    var gmtIndex = date.indexOf('GMT');
+    if (gmtIndex > -1) {
+      return new Date(date.substring(0, gmtIndex));
+    } else {
+      return new Date(date);
+    }
+  }
+
   Parse.Cloud.define("search", function(request, response) {
     var searchParams = {
-      date: request.params.date ? new Date(request.params.date) : null,
-      dateTimeNow: request.params.dateTimeNow ? new Date(request.params.dateTimeNow) : null,
+      date: request.params.date ? _parseDate(request.params.date) : null,
+      dateTimeNow: request.params.dateTimeNow ? _parseDate(request.params.dateTimeNow) : null,
       meals: request.params.meals,
       distance: request.params.distance,
       geolocation: request.params.geolocation,
