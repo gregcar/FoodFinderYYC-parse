@@ -1,9 +1,9 @@
 Food Finder YYC Parse Server
 ===
 
-![CodeShip status](https://app.codeship.com/projects/6bd77660-11aa-0135-e1c8-1a42010d9d06/status)
+[![Codeship Status for madebyuppercut/FoodFinderYYC-parse](https://app.codeship.com/projects/2a2aabe0-344a-0135-dc89-2213fdb1c191/status?branch=dev)](https://app.codeship.com/projects/226812)
 
-Prerequisites 
+Prerequisites
 ---
 
 1. NodeJS
@@ -89,7 +89,7 @@ After initialize Parse client, search can be done by invoking the `search` cloud
 The response would be an array, which contains 3 keys: `day`, `now`, and `object`, where:
 
 - `day`: This contains availability information for the day (of the query), as well as times that it's open
-- `now`: This contains availability information for right now (of the query), as well as times that it's open 
+- `now`: This contains availability information for right now (of the query), as well as times that it's open
 - `object`: The Parse object for the location
 
 **Note:** ```date``` needs to be present in order to determine if a location is open on that day, if ```dateTimeNow``` is present it'd also determine if it's open right now  
@@ -126,4 +126,3 @@ Parse.Cloud.run('search', {
   geolocation: {latitude: 51.055918, longitude: -114.100615}
 });
 ```
-
