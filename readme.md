@@ -1,7 +1,7 @@
 Food Finder YYC Parse Server
 ===
 
-[![Codeship Status for madebyuppercut/FoodFinderYYC-parse](https://app.codeship.com/projects/2a2aabe0-344a-0135-dc89-2213fdb1c191/status?branch=dev)](https://app.codeship.com/projects/226812)
+[ ![Codeship Status for madebyuppercut/FoodFinderYYC-parse](https://app.codeship.com/projects/2a2aabe0-344a-0135-dc89-2213fdb1c191/status?branch=master)](https://app.codeship.com/projects/226812)
 
 Prerequisites
 ---
