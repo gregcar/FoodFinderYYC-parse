@@ -29,7 +29,7 @@ describe('Schedule: ', function() {
     var schedule = new Schedule(availableRules);
 
     expect(schedule.check(time1, 'day').isAvailable).toBe(true);
-    expect(schedule.check(time1, 'day').times[0]).toEqual({start: 0900, end: 1000});
+    expect(schedule.check(time1, 'day').times[0]).toEqual({start: 900, end: 1000});
     expect(schedule.check(time1, 'hour').isAvailable).toBe(false);
     expect(schedule.check(time1, 'hour').times.length).toBe(0);
   });
@@ -98,7 +98,7 @@ describe('Schedule: ', function() {
     var schedule = new Schedule(availableRules);
 
     expect(schedule.check(time1, 'day').isAvailable).toBe(true);
-    expect(schedule.check(time1, 'day').times[0]).toEqual({start: 0900, end: 1000});
+    expect(schedule.check(time1, 'day').times[0]).toEqual({start: 900, end: 1000});
     expect(schedule.check(time1, 'hour').isAvailable).toBe(false);
     expect(schedule.check(time1, 'hour').times.length).toBe(0);
   });
@@ -173,7 +173,7 @@ describe('Schedule: ', function() {
     var schedule = new Schedule(availableRules, unavailableRules);
 
     expect(schedule.check(time1, 'day').isAvailable).toBe(true);
-    expect(schedule.check(time1, 'day').times[0]).toEqual({start: 0900, end: 1200});
+    expect(schedule.check(time1, 'day').times[0]).toEqual({start: 900, end: 1200});
     expect(schedule.check(time1, 'hour').isAvailable).toBe(false);
     expect(schedule.check(time1, 'hour').times.length).toBe(0);
   });
