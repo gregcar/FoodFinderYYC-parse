@@ -81,15 +81,6 @@
     var closedRules = closedTimes.map(_convertTimeToRule);
     var schedule = new Schedule(openRules, closedRules);
 
-    console.log('openRules: ');
-    openRules.map(function(rule) { console.log( rule ); });
-
-    console.log('closedRules: ');
-    closedRules.map(function(rule) { console.log( rule ); });
-
-    console.log('date: ' + date + ' converted: ',  _convertDate(date));
-    console.log('dateTimeNow: ' + dateTimeNow + ' converted: ', _convertDate(dateTimeNow));
-
     return {
       day: schedule.check(_convertDate(date), 'day'),
       now: dateTimeNow ? schedule.check(_convertDate(dateTimeNow), 'hour') : {isAvailable: false, times: []}
@@ -114,7 +105,6 @@
         Parse.Promise.when(isOpen.find(), isClosed.find())
           .then(
             function(openTimes, closedTimes) {
-              console.log('----- location: ' + location.get('name'));
               var check = _checkLocationSchedule(openTimes, closedTimes, searchParams.date, searchParams.dateTimeNow);
               if (check.day.isAvailable) {
                 return {object: location, day: check.day, now: check.now};
