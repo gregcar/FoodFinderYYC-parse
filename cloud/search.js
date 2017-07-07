@@ -27,7 +27,7 @@
     }
 
     // Building queries based on meals
-    if (searchParams.meals) {
+    if (searchParams.meals && searchParams.meals.length > 0) {
       queries = searchParams.meals.map(function(meal) {
         var query = new Parse.Query('Location');
 
@@ -39,6 +39,8 @@
       // Build a single or-query, apply restriction on main query (this works around the geolocation constraint on a or-query)
       mealsQuery = Parse.Query.or.apply(null, queries);
       mainQuery.matchesKeyInQuery('objectId', 'objectId', mealsQuery);
+    } else {
+      mainQuery.doesNotExist('meals');
     }
 
     return mainQuery.find();
@@ -79,6 +81,15 @@
     var closedRules = closedTimes.map(_convertTimeToRule);
     var schedule = new Schedule(openRules, closedRules);
 
+    console.log('openRules: ');
+    openRules.map(function(rule) { console.log( rule ); });
+
+    console.log('closedRules: ');
+    closedRules.map(function(rule) { console.log( rule ); });
+
+    console.log('date: ' + date + ' converted: ',  _convertDate(date));
+    console.log('dateTimeNow: ' + dateTimeNow + ' converted: ', _convertDate(dateTimeNow));
+
     return {
       day: schedule.check(_convertDate(date), 'day'),
       now: dateTimeNow ? schedule.check(_convertDate(dateTimeNow), 'hour') : {isAvailable: false, times: []}
@@ -103,6 +114,7 @@
         Parse.Promise.when(isOpen.find(), isClosed.find())
           .then(
             function(openTimes, closedTimes) {
+              console.log('----- location: ' + location.get('name'));
               var check = _checkLocationSchedule(openTimes, closedTimes, searchParams.date, searchParams.dateTimeNow);
               if (check.day.isAvailable) {
                 return {object: location, day: check.day, now: check.now};
@@ -141,10 +153,24 @@
       );
   }
 
+  /**
+   * Process date string into Date object, but retain the time instead of converting to server's timezone
+   * @param date
+   * @private
+   */
+  function _parseDate(date) {
+    var gmtIndex = date.indexOf('GMT');
+    if (gmtIndex > -1) {
+      return new Date(date.substring(0, gmtIndex));
+    } else {
+      return new Date(date);
+    }
+  }
+
   Parse.Cloud.define("search", function(request, response) {
     var searchParams = {
-      date: request.params.date ? new Date(request.params.date) : null,
-      dateTimeNow: request.params.dateTimeNow ? new Date(request.params.dateTimeNow) : null,
+      date: request.params.date ? _parseDate(request.params.date) : null,
+      dateTimeNow: request.params.dateTimeNow ? _parseDate(request.params.dateTimeNow) : null,
       meals: request.params.meals,
       distance: request.params.distance,
       geolocation: request.params.geolocation,
