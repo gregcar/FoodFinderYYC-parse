@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/madebyuppercut/FoodFinderYYC-parse#readme",
   "engines": {
-    "node": "~6.10.1",
-    "npm": "~4.1.2"
+    "node": "^8.1.4",
+    "npm": "^5.0.0"
   },
   "dependencies": {
     "express": "^4.15.2",
